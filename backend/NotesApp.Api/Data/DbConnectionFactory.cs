@@ -6,10 +6,6 @@ using Npgsql;
 
 namespace NotesApp.Api.Data
 {
-    /// <summary>
-    /// Abstraction over creation of ADO.NET connections to PostgreSQL.
-    /// Keeps connection-string / provider concerns out of repositories.
-    /// </summary>
     public interface IDbConnectionFactory
     {
         Task<IDbConnection> CreateOpenConnectionAsync();
