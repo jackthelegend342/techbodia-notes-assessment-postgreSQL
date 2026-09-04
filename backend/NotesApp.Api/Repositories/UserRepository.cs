@@ -6,10 +6,6 @@ using NotesApp.Api.Models;
 
 namespace NotesApp.Api.Repositories
 {
-    /// <summary>
-    /// Raw, parameterized Dapper queries against the "users" table.
-    /// No ORM change-tracking; every statement is explicit SQL.
-    /// </summary>
     public class UserRepository : IUserRepository
     {
         private readonly IDbConnectionFactory _connectionFactory;
