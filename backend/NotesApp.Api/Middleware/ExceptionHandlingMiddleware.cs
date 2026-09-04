@@ -9,11 +9,6 @@ using NotesApp.Api.Services;
 
 namespace NotesApp.Api.Middleware
 {
-    /// <summary>
-    /// Catches all unhandled exceptions, logs them safely (no sensitive data,
-    /// no stack traces leaked to the client), and returns a unified
-    /// RFC 7807 ProblemDetails JSON payload.
-    /// </summary>
     public class ExceptionHandlingMiddleware
     {
         private readonly RequestDelegate _next;
