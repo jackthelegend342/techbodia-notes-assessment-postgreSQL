@@ -1,12 +1,12 @@
--- ============================================================
+-- ======================================
 -- Notes Application - PostgreSQL Schema
--- ============================================================
+-- =====================================
 
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
--- ============================================================
+-- ============
 -- Table: users
--- ============================================================
+-- ============
 CREATE TABLE IF NOT EXISTS users (
     id             UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email          VARCHAR(255) NOT NULL UNIQUE,
@@ -18,9 +18,9 @@ CREATE TABLE IF NOT EXISTS users (
 
 CREATE INDEX IF NOT EXISTS idx_users_email ON users (email);
 
--- ============================================================
+-- ============
 -- Table: notes
--- ============================================================
+-- ============
 CREATE TABLE IF NOT EXISTS notes (
     id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id     UUID NOT NULL REFERENCES users (id) ON DELETE CASCADE,
@@ -31,16 +31,12 @@ CREATE TABLE IF NOT EXISTS notes (
     updated_at  TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
--- Critical for data-isolation query performance:
--- every note query is filtered by user_id.
 CREATE INDEX IF NOT EXISTS idx_notes_user_id ON notes (user_id);
 CREATE INDEX IF NOT EXISTS idx_notes_user_id_updated_at ON notes (user_id, updated_at DESC);
 
--- ============================================================
--- Trigger: keep updated_at fresh on users table row changes
--- (Notes.updated_at is set explicitly in application SQL on UPDATE,
---  per requirement; this trigger only covers the users table.)
--- ============================================================
+-- =======
+-- Trigger
+-- =======
 CREATE OR REPLACE FUNCTION set_updated_at()
 RETURNS TRIGGER AS $$
 BEGIN
